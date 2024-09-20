@@ -20,8 +20,14 @@ app.get('/', function (req, res) {
 });
 
 // your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+app.use('/api/whoami', function middlewareLog (req, res, next) {
+  let msg = {
+    ipaddress: req.ip,
+    language: req.headers['accept-language'],
+    software: req.headers['user-agent']
+  }
+  res.json(msg);
+  next();
 });
 
 // listen for requests :)
